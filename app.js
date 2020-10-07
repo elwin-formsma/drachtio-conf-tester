@@ -114,13 +114,18 @@ function checkCalls(mediaserver, total, limit, rate) {
 let callNo = 0;
 function launchCall(mediaserver) {
   let ep;
+  const outHeaders = {
+    'User-To-User': `call-${++callNo}`
+  };
+
   return mediaserver.createEndpoint()
     .then((endpoint) => {
       ep = endpoint;
       return srf.createUAC(conferenceUri, {
         localSdp: ep.local.sdp,
         callingNumber: `call-${++callNo}`,
-        proxy: config.get('callflow.proxy')
+        proxy: `${config.get('callflow.proxy')}`,
+        headers: outHeaders
       });
     })
     .then((dlg) => {
