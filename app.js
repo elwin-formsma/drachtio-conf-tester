@@ -71,7 +71,7 @@ function checkCalls(mediaserver, total, limit, rate) {
     reachTotal = true;
     return;
   }
-  else if (currentCalls == limit) {
+  else if (currentCalls >= limit-1) {
     if (!throttling) {
       logger.info(`checkCalls: not starting any calls because we have reached our limit: ${limit}`);
       throttling = true;
