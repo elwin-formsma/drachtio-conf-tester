@@ -119,7 +119,8 @@ function launchCall(mediaserver) {
       ep = endpoint;
       return srf.createUAC(conferenceUri, {
         localSdp: ep.local.sdp,
-        callingNumber: `call-${++callNo}`
+        callingNumber: `call-${++callNo}`,
+        proxy: config.get('callflow.proxy')
       });
     })
     .then((dlg) => {
