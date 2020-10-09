@@ -37,7 +37,7 @@ let countFailure = 0;
 let countStarting = 0;
 let checks = 0;
 let reachTotal = false;
-let throttling = false;
+// let throttling = false;
 const conferenceUri = `sip:${config.get('callflow.did')}@${config.get('callflow.sbc')}`;
 process
   .on('SIGINT', () => {  logger.warn('SIGINT received.. shutting down..'); do_shutdown(); });
@@ -74,10 +74,10 @@ function checkCalls(mediaserver, total, limit, rate) {
     return;
   }
   else if (currentCalls >= limit) {
-    if (!throttling) {
-      logger.info(`checkCalls: not starting any calls because we have reached our limit: ${limit}`);
-      throttling = true;
-    }
+    // if (!throttling) {
+    logger.info(`checkCalls: not starting any calls because we have reached our limit: ${limit}`);
+    //   throttling = false;
+    // }
     return;
   }
 
@@ -87,7 +87,7 @@ function checkCalls(mediaserver, total, limit, rate) {
   let countStart = Math.min(rate, total - countFinished - currentCalls);
   const msInterval = Math.floor(1000 / countStart);
   countStarting += countStart;
-  logger.debug(`checkCalls: starting ${countStart} calls with ${msInterval}ms delay`);
+  logger.info(`checkCalls: starting ${countStart} calls with ${msInterval}ms delay`);
 
   async.doUntil((callback) => {
     setTimeout(() => {
