@@ -171,7 +171,7 @@ function playPrompt(ep) {
 function setDialogHandlers(obj) {
   const {dlg, ep} = obj;
   const callId = dlg.sip.callId;
-
+  let duration = Math.floor(Math.random() * (config.get('callflow.call-duration-max') - config.get('callflow.call-duration-min')) + config.get('callflow.call-duration-min'));
   dlg
     .on('destroy', () => {
       logger.warn(`${callId}: got unexpected BYE`);
@@ -196,7 +196,7 @@ function setDialogHandlers(obj) {
     ep.destroy();
     callsInProgress.delete(callId);
     countSuccess++;
-  }, config.get('callflow.call-duration') * 1000);
+  }, duration * 1000);
 
   callsInProgress.set(dlg.sip.callId, Object.assign(obj, {timerID}));
 }

@@ -20,6 +20,7 @@
     "initial-delay": 2,
     "pin": "1223456",
     "pin-entry-delay": 2,
-    "call-duration": 15
+    "call-duration-min": 15,
+    "call-duration-max": 15
   }
 }
