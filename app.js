@@ -73,7 +73,7 @@ function checkCalls(mediaserver, total, limit, rate) {
     reachTotal = true;
     return;
   }
-  else if (currentCalls >= limit-1) {
+  else if (currentCalls >= limit) {
     if (!throttling) {
       logger.info(`checkCalls: not starting any calls because we have reached our limit: ${limit}`);
       throttling = true;
@@ -120,13 +120,16 @@ function launchCall(mediaserver) {
     'User-To-User': `call-${++callNo}`
   };
 
+  const proxyUri = getAvailableProxy();
+  logger.info(`Proxy: sending to ${proxyUri}`);
+
   return mediaserver.createEndpoint()
     .then((endpoint) => {
       ep = endpoint;
       return srf.createUAC(conferenceUri, {
         localSdp: ep.local.sdp,
         callingNumber: `call-${++callNo}`,
-        proxy: `${config.get('callflow.proxy')}`,
+        proxy: `${proxyUri}`,
         headers: outHeaders
       });
     })
