@@ -5,7 +5,7 @@ const Mrf = require('drachtio-fsmrf');
 const async = require('async');
 const logger = require('pino')();
 //const debug = require('debug')('drachtio:conf-tester');
-const { getAvailableProxy } = require('./utils');
+const { getAvailableProxy } = require('./lib/utils');
 
 
 
