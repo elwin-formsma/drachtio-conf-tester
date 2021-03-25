@@ -39,6 +39,7 @@ let checks = 0;
 let reachTotal = false;
 // let throttling = false;
 const conferenceUri = `sip:${config.get('callflow.did')}@${config.get('callflow.sbc')}`;
+logger.info(`confuri: ${conferenceUri}`);
 process
   .on('SIGINT', () => {  logger.warn('SIGINT received.. shutting down..'); do_shutdown(); });
 
@@ -120,7 +121,7 @@ function launchCall(mediaserver) {
     'User-To-User': `call-${++callNo}`
   };
 
-  const proxyUri = getAvailableProxy();
+  const proxyUri = config.get('callflow.proxy');
   logger.info(`Proxy: sending to ${proxyUri}`);
 
   return mediaserver.createEndpoint()
